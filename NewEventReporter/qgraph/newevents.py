@@ -69,9 +69,3 @@ def newEvents(fromBlockNumber):
             return sortedevents
         else:
             skip += 100
-
-
-if __name__ == '__main__':
-    r = newEvents(21402938)
-    #r = updateEvent("0x86cff466347995380277d68e8158298bc7d7067c")
-    print(r)
