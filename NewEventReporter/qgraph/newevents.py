@@ -64,8 +64,9 @@ def newEvents(fromBlockNumber):
         events = events + data['data']['usageEvents']
 
         if len(data['data']['usageEvents']) < 100:
-            events.reverse()
-            return events
+            sortedevents = sorted(events, key=lambda d: int(d['blockNumber']))
+
+            return sortedevents
         else:
             skip += 100
 
