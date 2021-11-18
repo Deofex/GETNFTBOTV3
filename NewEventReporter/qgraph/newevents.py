@@ -11,7 +11,7 @@ def updateEvent(eventaddress, blocknumber):
         usageEvents (
             where: {
                 eventAddress: "%s",
-                blockNumber_gt: %s
+                blockNumber_lt: %s
                 type: "NEW_EVENT"
             }
         )
