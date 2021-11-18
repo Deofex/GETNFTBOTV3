@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+    UpcomingEventsReport:
+        image: deofex/nftbotv3:upcomingeventsreport
+        env_file:
+            - dev.env
+    DailyReport:
+        image: deofex/nftbotv3:dailyreport
+        env_file:
+            - dev.env
+    NewEventReporter:
+        image: deofex/nftbotv3:neweventreporter
+        env_file:
+            - dev.env
+        volumes:
+            - getnftbot_v3:/config
+volumes:
+    getnftbot_v3:
+        external: true

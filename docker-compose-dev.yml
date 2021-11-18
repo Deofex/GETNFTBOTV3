@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+    UpcomingEventsReport:
+        image: deofex/nftbotv3:upcomingeventsreport
+        build:
+            context: .
+            dockerfile: ./UpcomingEventsReport/Dockerfile
+        env_file:
+            - dev.env
+    DailyReport:
+        image: deofex/nftbotv3:dailyreport
+        build:
+            context: .
+            dockerfile: ./DailyReport/Dockerfile
+        env_file:
+            - dev.env
+    NewEventReporter:
+        image: deofex/nftbotv3:neweventreporter
+        build:
+            context: .
+            dockerfile: ./NewEventReporter/Dockerfile
+        env_file:
+            - dev.env
+        volumes:
+            - getnftbot_v3:/config
+volumes:
+    getnftbot_v3:
+        external: true
