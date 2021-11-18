@@ -1,7 +1,4 @@
 import logging
-import json
-import requests
-import time
 from datetime import datetime
 from thegraph.querygraph import querygraph
 
