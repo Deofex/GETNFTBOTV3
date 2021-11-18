@@ -4,15 +4,15 @@ services:
     UpcomingEventsReport:
         image: deofex/nftbotv3:upcomingeventsreport
         env_file:
-            - dev.env
+            - prod.env
     DailyReport:
         image: deofex/nftbotv3:dailyreport
         env_file:
-            - dev.env
+            - prod.env
     NewEventReporter:
         image: deofex/nftbotv3:neweventreporter
         env_file:
-            - dev.env
+            - prod.env
         volumes:
             - getnftbot_v3:/config
 volumes:
