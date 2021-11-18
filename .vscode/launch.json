@@ -1,0 +1,48 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "UpcomingEventsReport",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "program": "./UpcomingEventsReport/main.py",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "./modules"
+            }
+        },
+        {
+            "name": "DailyReport",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "program": "./DailyReport/main.py",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "./modules"
+            }
+        },
+        {
+            "name": "NewEventReporter",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "program": "./NewEventReporter/main.py",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "./modules"
+            }
+        }
+    ]
+}
