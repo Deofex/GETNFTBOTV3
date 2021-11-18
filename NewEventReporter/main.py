@@ -44,7 +44,7 @@ def createMsg(event, eventisupdated):
     else:
         msg = "New event registered: "
     msg += (
-        "New event registered: <b>{eventname}</b>\n"
+        "<b>{eventname}</b>\n"
         "TX Polygon Chain: "
         "<a href=\"https://polygonscan.com/tx/{transactionhash}\">"
         "link</a>\n"
