@@ -4,6 +4,7 @@ import logging
 import re
 from datetime import datetime, timedelta
 from qgraph.graphdayreport import graphDayReport
+from reportbuilder.reportbuilder import ReportBuilder
 from telegram.telegram import TelegramBot
 
 # Log level 1 is INFO, Log level 2 is Debug
@@ -61,41 +62,46 @@ def filterdata(data, type):
 
 
 def createrapport(data, reportdate):
-    report = "<b>NFT report: {}-{}-{}</b>\n\n".format(
-        reportdate.day, reportdate.month, reportdate.year)
+    rb = ReportBuilder()
+    rb.addline("<b>NFT report: {}-{}-{}</b>".format(
+        reportdate.day, reportdate.month, reportdate.year))
+    rb.addemptyline()
     psalesum, psaletotal = filterdata(data, "MINT")
     if len(psalesum) > 0:
         i = 0
-        report += "<b>Tickets sold on the primary market:</b>\n"
+        rb.addline("<b>Tickets sold on the primary market:</b>")
         for k, v in psalesum.items():
             i += 1
-            report += ("<b>{})</b> {} --> {}\n".format(
+            rb.addline("<b>{})</b> {} --> {}".format(
                 i, k, v))
-        report += '<b>Total Amount: {}</b>\n\n'.format(psaletotal)
+        rb.addline('<b>Total Amount: {}</b>'.format(psaletotal))
+        rb.addemptyline()
     ssalesum, ssaletotal = filterdata(data, "RESALE")
     if len(ssalesum) > 0:
         i = 0
-        report += "<b>Tickets sold on the secondary market:</b>\n"
+        rb.addline("<b>Tickets sold on the secondary market:</b>")
         for k, v in ssalesum.items():
             i += 1
-            report += ("<b>{})</b> {} --> {}\n".format(
+            rb.addline("<b>{})</b> {} --> {}".format(
                 i, k, v))
-        report += '<b>Total Amount: {}</b>\n\n'.format(ssaletotal)
+        rb.addline('<b>Total Amount: {}</b>'.format(ssaletotal))
+        rb.addemptyline()
     tscansum, tscantotal = filterdata(data, "SCAN")
     if len(tscansum) > 0:
         i = 0
-        report += "<b>Tickets scanned:</b>\n"
+        rb.addline("<b>Tickets scanned:</b>")
         for k, v in tscansum.items():
             i += 1
-            report += ("<b>{})</b> {} --> {}\n".format(
+            rb.addline("<b>{})</b> {} --> {}".format(
                 i, k, v))
-        report += '<b>Total Amount: {}</b>\n\n'.format(tscantotal)
+        rb.addline('<b>Total Amount: {}</b>'.format(tscantotal))
+        rb.addemptyline()
 
-    report += ("<a href=\"https://explorer.get-protocol.io/\">"
+    rb.addline("<a href=\"https://explorer.get-protocol.io/\">"
                "All actions above are performed on getNFTs minted on  "
                "Polygon. View all NFT's in the GET ticket explorer</a>\n")
 
-    return report
+    return rb.create_report()
 
 
 def getdayreport():
@@ -112,6 +118,7 @@ def getdayreport():
     return report
 
 logger.info('Create report message')
-msg = getdayreport()
-logger.info('Send message via RG')
-tg.sendmessage(msg)
+msgs = getdayreport()
+logger.info('Send message via TG, amount of messages: {}'.format(len(msgs)))
+for msg in msgs:
+    tg.sendmessage(msg)
