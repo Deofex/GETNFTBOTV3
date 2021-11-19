@@ -98,7 +98,7 @@ class TelegramBot():
 
             if results['ok'] == True and 'error_code' not in results:
                 return results
-            elif 'error_code' in results:
+            if 'error_code' in results:
                 if results['error_code'] == 400:
                     raise Exception('BadFormat')
             else:
