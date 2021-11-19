@@ -70,6 +70,7 @@ def processNewEvents():
         ))
         if e['event']['ticketeerName'].lower() == 'demo':
             logger.info("Event is a demo. Skip communicationa about the event")
+            continue
         eventisupdated = updateEvent(e['eventAddress'],e['blockNumber'])
         logger.info('Event is updated: {}'.format(eventisupdated))
 
