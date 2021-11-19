@@ -68,6 +68,8 @@ def processNewEvents():
         logger.info("New event found. TX: {}, Name: {}".format(
             e['txHash'], e['event']['eventName']
         ))
+        if e['event']['ticketeerName'].lower() == 'demo':
+            logger.info("Event is a demo. Skip communicationa about the event")
         eventisupdated = updateEvent(e['eventAddress'],e['blockNumber'])
         logger.info('Event is updated: {}'.format(eventisupdated))
 
