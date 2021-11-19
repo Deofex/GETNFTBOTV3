@@ -8,7 +8,7 @@ declare -p | grep -Ev 'BASHOPTS|BASH_VERSINFO|EUID|PPID|SHELLOPTS|UID' > /contai
 # Setup a cron schedule
 echo "SHELL=/bin/bash
 BASH_ENV=/container.env
-0 16 * * * (cd /app;python /app/main.py) >> /var/log/script.log 2>&1
+0 9 * * * (cd /app;python /app/main.py) >> /var/log/script.log 2>&1
 # Cronjob to run the reporter" > scheduler.txt
 
 crontab scheduler.txt
