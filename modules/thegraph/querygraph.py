@@ -25,8 +25,8 @@ def querygraph(query):
             return data
         except Exception as e:
             logger.error(
-                'Error occured getting events. Error: {}: {}'.format(
-                    e.args[0]['code'], e.args[0]['message']
+                'Error occured getting events. Error: {}'.format(
+                    e
                 ))
             logger.info('Retry in 5 seconds. Retry {}/{}'.format(
                 retry, maxretry))
