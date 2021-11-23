@@ -77,7 +77,7 @@ class TelegramBot():
 
     def processfunction(self,url):
         errors = 0
-        maxerrors = 20
+        maxerrors = 10
         while True:
             if errors == maxerrors:
                 logger.error('To much errors occured, stop retrying')
@@ -101,10 +101,15 @@ class TelegramBot():
             if 'error_code' in results:
                 if results['error_code'] == 400:
                     raise Exception('BadFormat')
-            else:
-                logger.error(
-                    'Error {}/{}, invalid result. Error code: {}'.format(
-                        results['error_code']
+                elif results['error_code'] == 429:
+                    logger.warning(
+                        'TG used to much, retry after: {} seconds'.format(
+                        results['parameters']['retry_after']
                     ))
-                errors += 1
-                time.sleep(5)
+                    time.sleep(results['parameters']['retry_after'])
+            errors += 1
+            logger.error(
+                'Error {}/{}, retry'.format(
+                    errors, maxerrors
+                ))
+            time.sleep(5)
