@@ -55,7 +55,7 @@ def createMsg(event, eventisupdated):
         transactionhash=event['txHash'],
         shopurl=event['event']['shopUrl'],
         date=datetime.fromtimestamp(int(event['event']['startTime'])).strftime(
-            '%Y-%m-%d %H:%M'),
+            '%d-%m-%Y %H:%M'),
         ticketeer=event['event']['ticketeerName']
     )
     return msg
