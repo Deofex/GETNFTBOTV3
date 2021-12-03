@@ -96,6 +96,16 @@ def createrapport(data, reportdate):
                 i, k, v))
         rb.addline('<b>Total Amount: {}</b>'.format(tscantotal))
         rb.addemptyline()
+    tinvalidatedsum, tinvalidatedtotal = filterdata(data, "INVALIDATE")
+    if len(tinvalidatedsum) > 0:
+        i = 0
+        rb.addline("<b>Tickets invalidated:</b>")
+        for k, v in tinvalidatedsum.items():
+            i += 1
+            rb.addline("<b>{})</b> {} --> {}".format(
+                i, k, v))
+        rb.addline('<b>Total Amount: {}</b>'.format(tinvalidatedtotal))
+        rb.addemptyline()
 
     rb.addline("<a href=\"https://explorer.get-protocol.io/\">"
                "All actions above are performed on getNFTs minted on  "
