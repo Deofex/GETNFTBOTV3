@@ -20,19 +20,16 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push Docker image
-        working-directory: ./DailyReport
         run: |
-          docker build -t deofex/nftbotv3:dailyreport .
+          docker build -f ./DailyReport/Dockerfile -t deofex/nftbotv3:dailyreport .
           docker push deofex/nftbotv3:dailyreport
       - name: Build and push Docker image
-        working-directory: ./NewEventReporter
         run: |
-          docker build -t deofex/nftbotv3:neweventreporter .
+          docker build  -f ./NewEventReporter/Dockerfile -t deofex/nftbotv3:neweventreporter .
           docker push deofex/nftbotv3:neweventreporter 
       - name: Build and push Docker image
-        working-directory: ./UpcomingEventsReport
         run: |
-          docker build -t deofex/nftbotv3:upcomingeventsreport .
+          docker build -f ./UpcomingEventsReport/Dockerfile -t deofex/nftbotv3:upcomingeventsreport .
           docker push deofex/nftbotv3:upcomingeventsreport
 
   
