@@ -25,10 +25,6 @@ jobs:
           docker push deofex/nftbotv3:dailyreport
       - name: Build and push Docker image
         run: |
-          docker build  -f ./NewEventReporter/Dockerfile -t deofex/nftbotv3:neweventreporter .
-          docker push deofex/nftbotv3:neweventreporter 
-      - name: Build and push Docker image
-        run: |
           docker build -f ./UpcomingEventsReport/Dockerfile -t deofex/nftbotv3:upcomingeventsreport .
           docker push deofex/nftbotv3:upcomingeventsreport
 
