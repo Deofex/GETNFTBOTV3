@@ -32,12 +32,12 @@ logger.info('Start Upcoming Events Processor')
 tg = TelegramBot(telegramapitoken,telegramchannel)
 
 def ticketeername(ticketeername):
-    if ticketeername == 'YourTicketProvider':
+    if ticketeername == 'YourTicketProvider v1':
         ticketeername = 'YTP'
     return ticketeername
 
 def eventname(eventname, ticketeername):
-    if ticketeername == 'YourTicketProvider':
+    if ticketeername == 'YourTicketProvider v1':
         ytpguidregex = '^([0-z]){8}(-([0-z]){4}){3}-([0-z]){12}$'
         if re.match(ytpguidregex, eventname):
             eventname = 'Name event not disclosed'
@@ -46,33 +46,33 @@ def eventname(eventname, ticketeername):
 def tidyupdata(data):
     tdata = {}
     for e in data:
-        if e['eventName'] in tdata:
-            tdata[e['eventName']][0] = True
-            tdata[e['eventName']][1].append(e['startTime'])
-            tdata[e['eventName']][2] += int(e['mintCount'])
+        if e['name'] in tdata:
+            tdata[e['name']][0] = True
+            tdata[e['name']][1].append(e['startTime'])
+            tdata[e['name']][2] += int(e['soldCount'])
         else:
             edata = [
                 False,
                 [e['startTime'],],
-                int(e['mintCount']),
-                ticketeername(e['ticketeerName']),
-                eventname(e['eventName'],e['ticketeerName'])
+                int(e['soldCount']),
+                ticketeername(e['integrator']['name']),
+                eventname(e['name'],e['integrator']['name'])
             ]
-            tdata[e['eventName']] = edata
+            tdata[e['name']] = edata
 
     tldata = []
     for k,v in tdata.items():
         tldata.append({
-            'eventName': k,
+            'name': k,
             'multiEvent': v[0],
             'startTime': v[1],
-            'mintCount': v[2],
+            'soldCount': v[2],
             'ticketeerName':v[3],
             'displayName':v[4]
         })
 
     tldata = sorted(
-        tldata, key=lambda e: e['mintCount'], reverse=True)
+        tldata, key=lambda e: e['soldCount'], reverse=True)
     return tldata
 
 
@@ -88,7 +88,7 @@ def createrapport(tdata):
                         eventName=e['displayName'],
                         occurrences=len(e['startTime']),
                         ticketeerName=e['ticketeerName'],
-                        mintCount=e['mintCount']
+                        mintCount=e['soldCount']
                     ))
         else:
             edate =datetime.fromtimestamp(int(e['startTime'][0]))
@@ -98,7 +98,7 @@ def createrapport(tdata):
                         eventName=e['displayName'],
                         startTime=edate.strftime('%d-%m-%Y'),
                         ticketeerName=e['ticketeerName'],
-                        mintCount=e['mintCount']
+                        mintCount=e['soldCount']
                     ))
         if len(msg) + len(msgp) > 4000:
             msgs.append(msg)

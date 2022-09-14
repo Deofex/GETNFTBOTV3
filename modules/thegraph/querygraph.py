@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 graphurl = \
-    "https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph-deprecated"
+    "https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph"
 
 
 def querygraph(query):

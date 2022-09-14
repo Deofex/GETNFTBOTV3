@@ -5,9 +5,6 @@ from thegraph.querygraph import querygraph
 # Configure logging
 logger = logging.getLogger(__name__)
 
-graphurl = \
-    "https://api.thegraph.com/subgraphs/name/getprotocol/get-protocol-subgraph-deprecated"
-
 def graphDayReport(date):
     epochdate = datetime(1970, 1, 1)
     datenumber = (date - epochdate).days
@@ -35,8 +32,10 @@ def graphDayReport(date):
                 blockNumber
                 type
                 event{
-                    eventName
-                    ticketeerName
+                    name
+                    integrator {
+                        name
+                    }
                 }
             }
         }

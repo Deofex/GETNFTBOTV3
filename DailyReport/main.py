@@ -44,11 +44,11 @@ def filterdata(data, type):
         if e['type'] != type:
             continue
         filteredsumcount += 1
-        if re.match(ytpguidregex, e['event']['eventName']) and \
-                e['event']['ticketeerName'] == 'YourTicketProvider':
+        if re.match(ytpguidregex, e['event']['name']) and \
+                e['event']['integrator']['name'] == 'YourTicketProvider v1':
             n = 'YourTicketProvider events (nameless)'
         else:
-            n = e['event']['eventName']
+            n = e['event']['name']
         # If event exist, update the amount, else create a new entry
         if n in filtereddata.keys():
             filtereddata[n] = filtereddata[n] + 1
@@ -66,7 +66,7 @@ def createrapport(data, reportdate):
     rb.addline("<b>NFT report: {}-{}-{}</b>".format(
         reportdate.day, reportdate.month, reportdate.year))
     rb.addemptyline()
-    psalesum, psaletotal = filterdata(data, "MINT")
+    psalesum, psaletotal = filterdata(data, "SOLD")
     if len(psalesum) > 0:
         i = 0
         rb.addline("<b>Tickets sold on the primary market:</b>")
@@ -76,7 +76,7 @@ def createrapport(data, reportdate):
                 i, k, v))
         rb.addline('<b>Total Amount: {}</b>'.format(psaletotal))
         rb.addemptyline()
-    ssalesum, ssaletotal = filterdata(data, "RESALE")
+    ssalesum, ssaletotal = filterdata(data, "RESOLD")
     if len(ssalesum) > 0:
         i = 0
         rb.addline("<b>Tickets sold on the secondary market:</b>")
@@ -86,7 +86,7 @@ def createrapport(data, reportdate):
                 i, k, v))
         rb.addline('<b>Total Amount: {}</b>'.format(ssaletotal))
         rb.addemptyline()
-    tscansum, tscantotal = filterdata(data, "SCAN")
+    tscansum, tscantotal = filterdata(data, "SCANNED")
     if len(tscansum) > 0:
         i = 0
         rb.addline("<b>Tickets scanned:</b>")
@@ -96,7 +96,7 @@ def createrapport(data, reportdate):
                 i, k, v))
         rb.addline('<b>Total Amount: {}</b>'.format(tscantotal))
         rb.addemptyline()
-    tinvalidatedsum, tinvalidatedtotal = filterdata(data, "INVALIDATE")
+    tinvalidatedsum, tinvalidatedtotal = filterdata(data, "INVALIDATED")
     if len(tinvalidatedsum) > 0:
         i = 0
         rb.addline("<b>Tickets invalidated:</b>")
@@ -106,6 +106,17 @@ def createrapport(data, reportdate):
                 i, k, v))
         rb.addline('<b>Total Amount: {}</b>'.format(tinvalidatedtotal))
         rb.addemptyline()
+    tclaimedsum, tclaimedtotal = filterdata(data, "CHECKED_IN")
+    if len(tclaimedsum) > 0:
+        i = 0
+        rb.addline("<b>Tickets checked in:</b>")
+        for k, v in tclaimedsum.items():
+            i += 1
+            rb.addline("<b>{})</b> {} --> {}".format(
+                i, k, v))
+        rb.addline('<b>Total Amount: {}</b>'.format(tclaimedtotal))
+        rb.addemptyline()
+
 
     rb.addline("<a href=\"https://explorer.get-protocol.io/\">"
                "All actions above are performed on getNFTs minted on  "

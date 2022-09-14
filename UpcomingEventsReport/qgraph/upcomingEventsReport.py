@@ -42,18 +42,20 @@ def upcomingEventsReport(startdate):
             where: {
                 startTime_gt: %s,
                 startTime_lt: %s,
-                mintCount_gt: 0,
+                soldCount_gt: 0,
             },
             first:100,
             skip:%s
-            orderBy: mintCount, orderDirection: desc
-        )
-        {
-        eventName,
-        mintCount,
-        startTime,
-        ticketeerName
-        }
+            orderBy: soldCount, orderDirection: desc
+            )
+            {
+                name,
+                soldCount,
+                startTime,
+                integrator{
+                name
+                }
+            }
         }
         ''' % (startdateepoch, enddateepoch, skip)
 
