@@ -9,12 +9,3 @@ services:
         image: deofex/nftbotv3:dailyreport
         env_file:
             - prod.env
-    NewEventReporter:
-        image: deofex/nftbotv3:neweventreporter
-        env_file:
-            - prod.env
-        volumes:
-            - getnftbot_v3:/config
-volumes:
-    getnftbot_v3:
-        external: true
